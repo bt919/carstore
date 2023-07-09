@@ -1,0 +1,19 @@
+extends layout
+
+block content 
+    h2= title
+
+    form(method="POST" action="")
+        div.form-group
+            label(for="name") Brand name: 
+            input#name(type="text", name="name", required="true" value=(undefined===brand ? "" : brand.name)) 
+
+        div.form-group
+            label(for="logoURL") Brand's logo's url (png format): 
+            input#logoURL(type="text", name="logoURL", required="true" value=(undefined===brand ? "" : brand.logoURL))
+
+        button(type="submit") Submit
+    if errors
+        ul
+            for error in errors 
+                li!= error.msg
