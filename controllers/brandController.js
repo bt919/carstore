@@ -57,17 +57,21 @@ exports.brand_create_post = [
 ];
 
 exports.brand_detail = asyncHandler(async (req, res, next) => {
-  const brand = await Brand.findOne({ name: req.params.brand }).exec();
+  const brand = await Brand.findOne({ name: req.params.brand })
+    .populate("cars")
+    .exec();
 
   if (brand === null) {
     res.redirect("/");
   }
 
-  res.render("brand_detail", { brands_list: brand.cars, name: brand.name });
+  res.render("brand_detail", { cars_list: brand.cars, name: brand.name });
 });
 
 exports.brand_delete_get = asyncHandler(async (req, res, next) => {
-  const brand = await Brand.findOne({ name: req.params.brand }).exec();
+  const brand = await Brand.findOne({ name: req.params.brand })
+    .populate("cars")
+    .exec();
 
   if (brand === null) res.redirect("/");
 

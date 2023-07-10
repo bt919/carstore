@@ -10,11 +10,12 @@ block content
         
         div.form-group
             label(for="price") Price (in CAD):
-            input#price(type="text", name="price", required="true", value=(undefined===car ? "" : car.price))
+            input#price(type="number", name="price", required="true", value=(undefined===car ? "" : car.price))
 
         div.form-group
             label(for="description") Description:
-            textarea#description(cols="22", rows="8", name="description", required="true", value=(undefined===car ? "" : car.description))
+            textarea#description(cols="22", rows="8", name="description", required="true")
+                | #{undefined===car ? "" : car.description}
 
         div.form-group
             label(for="imageURL") imageURL: 

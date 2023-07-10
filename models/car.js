@@ -5,9 +5,9 @@ const Schema = mongoose.Schema;
 const CarSchema = new Schema({
   name: { type: String, required: true },
   price: { type: Number, required: true },
-  brand: { type: Schema.Types.ObjectId, required: true, ref: "Brand" },
+  brand: { type: String, required: true },
   description: { type: String, required: true },
-  hp: { type: Number, required: true },
+  imageURL: { type: String, required: true },
 });
 
 CarSchema.virtual("url").get(function () {

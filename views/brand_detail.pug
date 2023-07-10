@@ -3,9 +3,14 @@ extends layout
 block content 
     h2 You are currently viewing our #{name} cars
 
-    if brands_list
-        each car in brands_list
-            a(href=brand.url)
+    if cars_list
+        div.cars
+            each car in cars_list
+                a(href=car.url).car
+                    img(src=car.imageURL, alt=`${car.name} shot`)
+                    div.description
+                        h4 #{car.name}
+                        h4 $#{car.price.toLocaleString()}
 
     a(href=`/${name}/create`).create Click here to add a new car to this brand
     a(href=`${name}/delete`).delete Click here to delete this brand

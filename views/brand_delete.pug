@@ -1,15 +1,17 @@
 extends layout
 
 block content 
-    h2 You are currently viewing #{name} automobiles
-
-    if brands_list
-        p You must delete the following cars before deleting #{name}
-        each car in brands_list
-            a(href=brand.url)
+    if cars_list.length
+        h2 You must delete the following cars before deleting the #{name} brand.
+        each car in cars_list
+            a(href=car.url).car
+                    img(src=car.imageURL, alt=`${car.name} shot`)
+                    div.description
+                        h4 #{car.name}
+                        h4 $#{car.price.toLocaleString()}
 
     else 
-        p Do you really want to remove this brand?
+        h2 Do you really want to remove the #{name} brand?
 
         form(method="POST" action="").delete
             div.form-group

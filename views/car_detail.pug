@@ -1,0 +1,15 @@
+extends layout
+
+block content 
+    h2= title
+
+    div.car-display
+        img(src=car.imageURL, alt=`${car.name} shot`)
+        div.desc
+            p #{car.description}
+            div.misc
+                p #{car.name}
+                p Price starts at $#{car.price.toLocaleString()}
+
+    a(href=`${car.url}/update`).update Click here update this car's information
+    a(href=`${car.url}/delete`).delete Click here to delete this car

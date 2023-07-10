@@ -1,0 +1,11 @@
+extends layout
+
+block content 
+    h2 Do you really want to remove the #{car.name}?
+    img(src=car.imageURL, alt=`${car.name} shot`).car
+
+    form(method="POST" action="").delete
+        div.form-group
+            input(type="hidden", name="name", required="true", value=car.name)
+        
+        button(type="submit") Delete
