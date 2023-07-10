@@ -68,7 +68,6 @@ exports.car_create_post = [
 
 exports.car_detail = asyncHandler(async (req, res, next) => {
   const car = await Car.findById(req.params.id).exec();
-  console.error("-----------------" + req.params.id + "--------------------");
 
   if (car === null) {
     res.redirect("/");

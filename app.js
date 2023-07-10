@@ -3,16 +3,27 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const compression = require("compression");
+const helmet = require("helmet");
 
 const indexRouter = require("./routes/index");
 
 const app = express();
 
+const RateLimit = require("express-rate-limit");
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 20,
+});
+
+app.use(limiter);
+
 // Set up mongoose connection
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-const mongoDB =
+const dev_db_url =
   "mongodb+srv://admin:goblinsob9@cluster0.9icyhlu.mongodb.net/?retryWrites=true&w=majority";
+const mongoDB = process.env.MONGODB_URI || dev_db_url;
 
 main().catch((err) => console.log(err));
 async function main() {
@@ -22,6 +33,25 @@ async function main() {
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
+
+app.use(compression());
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "img-src": [
+        "images.pexels.com",
+        "images.unsplash.com",
+        "static.vecteezy.com",
+        "logos-world.net",
+        "upload.wikimedia.org",
+        "logos-download.com",
+        "assets.stickpng.com",
+        "w.forfun.com",
+      ],
+    },
+  })
+);
 
 app.use(logger("dev"));
 app.use(express.json());

@@ -27,7 +27,6 @@ exports.brand_create_post = [
   body("logoURL").trim().isLength({ min: 13 }),
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
-    console.log(req.body);
 
     const brand = new Brand({
       name: req.body.name,
@@ -35,7 +34,6 @@ exports.brand_create_post = [
     });
 
     if (!errors.isEmpty()) {
-      console.log(errors);
       res.render("brand_form", {
         title: "Add a new brand",
         brand: brand,
@@ -45,10 +43,8 @@ exports.brand_create_post = [
       const brandExists = await Brand.findOne({ name: req.body.name }).exec();
 
       if (brandExists) {
-        console.log("brand exists");
         res.redirect(brandExists.url);
       } else {
-        console.log("saving new brand to db");
         await brand.save();
         res.redirect(brand.url);
       }
