@@ -6,11 +6,11 @@ block content
   if brand_list
     div.brands
       each brand in brand_list 
-        a(href=brand.url) 
-          div.brand
+        div.brand
+          a(href=brand.url alt=`Click to view our ${brand.name} cars`) 
             img(src=`${brand.logoURL}`, alt=`${brand.name} logo`)
             h4 #{brand.name}
   else
     p Our inventory is empty at the moment.
 
-  a(href="/create").create Have a brand you want to add? Click here 
+  a(href="/create").create Click here to add a new brand

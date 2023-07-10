@@ -46,30 +46,47 @@ exports.brand_create_post = [
 
       if (brandExists) {
         console.log("brand exists");
-        res.redirect(brand.url);
+        res.redirect(brandExists.url);
       } else {
         console.log("saving new brand to db");
         await brand.save();
-        res.render("brand_detail", { title: brand.name });
+        res.redirect(brand.url);
       }
     }
   }),
 ];
 
 exports.brand_detail = asyncHandler(async (req, res, next) => {
-  const brand = await Brand.find({ name: req.params.brand }).exec();
+  const brand = await Brand.findOne({ name: req.params.brand }).exec();
 
   if (brand === null) {
     res.redirect("/");
   }
 
-  res.render("brand_detail", { title: brand.name });
+  res.render("brand_detail", { brands_list: brand.cars, name: brand.name });
 });
 
 exports.brand_delete_get = asyncHandler(async (req, res, next) => {
-  res.render("index", { title: "Delete brand" });
+  const brand = await Brand.findOne({ name: req.params.brand }).exec();
+
+  if (brand === null) res.redirect("/");
+
+  res.render("brand_delete", {
+    name: brand.name,
+    cars_list: brand.cars,
+  });
 });
 
 exports.brand_delete_post = asyncHandler(async (req, res, next) => {
-  res.render("index", { title: "Delete brand" });
+  const brand = await Brand.findOne({ name: req.params.brand }).exec();
+
+  if (brand.cars.length > 0) {
+    res.render("brand_delete", {
+      name: brand.name,
+      brands_list: brand.cars,
+    });
+  } else {
+    await Brand.findByIdAndRemove(brand._id);
+    res.redirect("/");
+  }
 });

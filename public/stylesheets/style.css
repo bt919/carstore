@@ -67,20 +67,23 @@ a.header:active {
   color: var(--text-color);
 }
 
-a.create {
-  margin-top: auto;
+a.create, a.delete {
   margin-bottom: 10px;
   border: 3px solid var(--text-color);
   padding: 8px;
   user-select: none;
 }
 
-a.create:hover {
+a.create {
+  margin-top: auto;
+}
+
+a.create:hover, a.delete:hover {
   background-color: var(--sub-color);
   color: var(--text-color);
 }
 
-a.create:active {
+a.create:active, a.delete:active {
   border: 3px solid var(--text-color);
   background-color: var(--sub-alt-color);
   color: var(--text-color);
@@ -134,14 +137,21 @@ li {
 }
 
 .brand {
+  padding: 10px;
+  width: 250px;
+  height: 250px;
+}
+
+.brand > a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
+  justify-content: space-around;
+  height: 100%;
 }
 
 .brand img {
-  width: 200px;
+  width: 150px;
 }
 
 .brand:hover {
@@ -150,4 +160,18 @@ li {
 
 .brand:active {
   background-color: var(--sub-color);
+}
+
+.brands {
+  width: min(1000px, 100%);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 300px);
+  grid-auto-rows: 300px;
+  grid-auto-columns: 300px;
+  justify-items: center;
+}
+
+form.delete {
+  border: none;
+  margin-top: -20px;
 }
